@@ -9,6 +9,7 @@ build-backend = "setuptools.build_meta"
 name = "ghost-aop"
 version = "0.0.1"
 dependencies = [
+    "aspectlib",
     "requests",
     "python-dotenv",
 ]
@@ -45,7 +46,7 @@ docs-serve = "mkdocs serve"
 [tool.pydoc-markdown]
 loaders = [
     { type = "python", search_path = [
-        "src/"
+        "src/pipeline", "src/"
         ]}
 ]
 renderer = {type = "markdown"}
@@ -68,5 +69,5 @@ testpaths = [
 [tool.coverage.run]
 omit = [
     "src/main.py",
-    "src/__init__.py",
+    "src/pipeline/__init__.py",
 ]

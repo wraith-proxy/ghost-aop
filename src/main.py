@@ -9,17 +9,17 @@ from pipeline.stages import ExtractStage, TransformStage, LoadStage
 
 
 def run(batch: DataBatch) -> None:
-    extracted  = ExtractStage().execute(batch)
+    extracted = ExtractStage().execute(batch)
     transformed = TransformStage().execute(extracted)
     LoadStage().execute(transformed)
 
 
-if __name__ == "__main__":
+def main() -> None:
     incoming = DataBatch(
         id=str(uuid.uuid4()),
         records=[
             {"Name": "Alice", "Score": 91},
-            {"Name": "Bob",   "Score": 74},
+            {"Name": "Bob", "Score": 74},
             {"Name": "Carol", "Score": 88},
         ],
         schema="raw_v1",
@@ -31,3 +31,7 @@ if __name__ == "__main__":
     print("\n=== LINEAGE TRAIL ===\n")
     for entry in lineage_store.records:
         print(f"  {entry}")
+
+
+if __name__ == "__main__":
+    main()

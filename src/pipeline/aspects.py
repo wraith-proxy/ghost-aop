@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import datetime
+from datetime import UTC, datetime
 
 import aspectlib
 
@@ -84,6 +84,6 @@ def audit_trail(*args, **kwargs):
         stage=args[0].__class__.__name__,
         input_id=args[1].id,
         output_id=result.id,
-        timestamp=datetime.utcnow().isoformat(),
+        timestamp=datetime.now(UTC).isoformat(),
     )
     yield aspectlib.Return(result)

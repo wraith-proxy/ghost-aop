@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 
 
 @dataclass
@@ -7,7 +7,7 @@ class DataBatch:
     id: str
     records: list[dict]
     schema: str
-    received_at: datetime = field(default_factory=datetime.utcnow)
+    received_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 @dataclass
@@ -16,4 +16,4 @@ class ProcessedBatch:
     source_id: str
     records: list[dict]
     schema: str
-    processed_at: datetime = field(default_factory=datetime.utcnow)
+    processed_at: datetime = field(default_factory=lambda: datetime.now(UTC))
