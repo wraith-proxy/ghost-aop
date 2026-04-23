@@ -1,0 +1,43 @@
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ghost-template"
+version = "0.0.1"
+dependencies = [
+    "requests",
+    "python-dotenv",
+]
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "pytest",
+    "pytest-cov",
+    "pre-commit",
+    "commitizen",
+]
+
+[tool.pytest.ini_options]
+xfail_strict = true
+addopts = [
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--tb=short",
+    "--strict-markers",
+]
+pythonpath = [
+    "src",
+]
+testpaths = [
+    "tests",
+]
+
+[tool.black]
+line-length = 79

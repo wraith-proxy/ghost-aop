@@ -1,0 +1,9 @@
+services:
+  ghost-app:
+    build: .
+    container_name: ghost-app
+    restart: unless-stopped
+    volumes:
+      - .:/app
+    environment:
+      - ENV=development
