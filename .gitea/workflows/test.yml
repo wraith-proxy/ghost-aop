@@ -1,4 +1,4 @@
-name: Discourse-Bot CI
+name: Python-AOP CI
 
 on:
   push:
@@ -15,13 +15,8 @@ jobs:
           fetch-depth: 0
       - name: Run Production Tests
         run: |
-          chmod +x bin/run_tests.sh
-          ./bin/run_tests.sh --no-venv
-        env:
-          SOVEREIGN_FORUM_URL: "https://mock.forum"
-          SOVEREIGN_API_KEY: "mock_key"
-          SOVEREIGN_USERNAME: "mock_user"
-          PYTHONPATH: .
+          uv sync --all-extras --all-groups
+          uv run poe test-ci
 
   auto-merge:
     needs: test-and-verify

@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ghost-template"
+name = "ghost-aop"
 version = "0.0.1"
 dependencies = [
     "requests",
@@ -16,13 +16,39 @@ requires-python = ">=3.12"
 
 [project.optional-dependencies]
 dev = [
-    "black",
-    "flake8",
+    "ruff",
+    "ty",
     "pytest",
     "pytest-cov",
     "pre-commit",
     "commitizen",
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "poethepoet",
+    "pydoc-markdown",
+    "typer",
 ]
+
+[project.scripts]
+ghost-run = "src.main:main"
+
+[tool.poe.tasks]
+setup = "python tasks.py"
+test = "pytest"
+test-ci = "pytest --cov=src tests/ --cov-report=term-missing --cov-fail-under=80"
+lint = "ruff check ."
+format = "ruff format ."
+docs-build = "mkdocs build"
+docs-serve = "mkdocs serve"
+
+[tool.pydoc-markdown]
+loaders = [
+    { type = "python", search_path = [
+        "src/"
+        ]}
+]
+renderer = {type = "markdown"}
 
 [tool.pytest.ini_options]
 xfail_strict = true
@@ -33,11 +59,14 @@ addopts = [
     "--strict-markers",
 ]
 pythonpath = [
-    "src",
+    ".",
 ]
 testpaths = [
     "tests",
 ]
 
-[tool.black]
-line-length = 79
+[tool.coverage.run]
+omit = [
+    "src/main.py",
+    "src/__init__.py",
+]

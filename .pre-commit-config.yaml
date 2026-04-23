@@ -1,33 +1,68 @@
+minimum_pre_commit_version: 4.0.0
+default_stages: [pre-commit, pre-push]
+
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
     hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        exclude: ^src/wraith_cli/assets\.py$
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+      - id: check-case-conflict
 
--   repo: https://github.com/psf/black
-    rev: 23.3.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.9
     hooks:
-    -   id: black
+      - id: ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
+      - id: ruff-format
 
--   repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.2
     hooks:
-    -   id: flake8
-        args: [--max-line-length=79]
+      - id: codespell
+        types_or: [python, markdown, rst]
 
--   repo: local
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.2
     hooks:
-    -   id: pytest-coverage
+      - id: pyupgrade
+        args: [--py312-plus]
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        args: ["--severity=warning"]
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: package-lock.json
+
+  - repo: local
+    hooks:
+      - id: ty-check
+        name: ty check
+        entry: uv run ty check
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      - id: pytest-coverage
         name: pytest-coverage
-        entry: ./bin/run_tests.sh
+        entry: uv run poe test-ci
         language: system
         pass_filenames: false
         always_run: true
 
-    -   id: commitizen
+      - id: commitizen
         name: commitizen check
         entry: uv run cz check --commit-msg-file
         language: system
