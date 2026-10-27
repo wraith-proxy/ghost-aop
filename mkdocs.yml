@@ -1,0 +1,36 @@
+site_name: ghost-aop
+site_description: Aspect-oriented programming in Python, applied to a data pipeline
+site_author: Thomas Peoples
+repo_url: https://git.thomaspeoples.com/thomaspeoples/ghost-aop
+edit_uri: edit/main/docs/
+site_url: https://www.thomaspeoples.com/gitea-repos/ghost-aop/
+use_directory_urls: true
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: cyan
+  features:
+    - navigation.tabs
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - API Reference: api.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - pymdownx.snippets:
+      base_path: ["."]
+  - admonition
+  - pymdownx.details
+
+extra:
+  links:
+    - icon: material/home
+      link: https://www.thomaspeoples.com/
+      name: Back to Main Site
