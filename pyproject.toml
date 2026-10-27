@@ -71,3 +71,6 @@ omit = [
     "src/main.py",
     "src/pipeline/__init__.py",
 ]
+
+[tool.uv]
+override-dependencies = ["black>=26.10.1"]
